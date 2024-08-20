@@ -30,6 +30,29 @@ export class PostRepositoryImpl implements IPostRepository {
     }
   }
 
+  async getById(postId: string): Promise<Post | null> {
+    try {
+      const post = await this.db.post.findFirst({
+        where: { id: postId },
+      });
+
+      if (!post) {
+        return null;
+      }
+
+      return new Post(
+        post.id,
+        post.title,
+        post.content,
+        post.isPublished,
+        post.createdAt,
+      );
+    } catch (err) {
+      console.error(err);
+      throw new Error("Internal server error");
+    }
+  }
+
   async create(post: Post): Promise<Post> {
     try {
       const postRegistered = await this.db.post.findFirst({
@@ -41,7 +64,13 @@ export class PostRepositoryImpl implements IPostRepository {
       }
 
       await this.db.post.create({
-        data: post,
+        data: {
+          id: post.id,
+          title: post.title,
+          content: post.content,
+          isPublished: post.isPublished,
+          createdAt: post.createdAt,
+        },
       });
 
       return post;
