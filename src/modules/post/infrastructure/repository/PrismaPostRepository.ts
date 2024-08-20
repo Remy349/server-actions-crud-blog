@@ -11,17 +11,43 @@ export class PostRepositoryImpl implements IPostRepository {
   }
 
   async getAll(): Promise<Post[]> {
-    const posts = await this.db.post.findMany();
+    try {
+      const posts = await this.db.post.findMany();
 
-    return posts.map(
-      (post) =>
-        new Post(
-          post.id,
-          post.title,
-          post.content,
-          post.isPublished,
-          post.createdAt,
-        ),
-    );
+      return posts.map(
+        (post) =>
+          new Post(
+            post.id,
+            post.title,
+            post.content,
+            post.isPublished,
+            post.createdAt,
+          ),
+      );
+    } catch (err) {
+      console.error(err);
+      throw new Error("Internal server error");
+    }
+  }
+
+  async create(post: Post): Promise<Post> {
+    try {
+      const postRegistered = await this.db.post.findFirst({
+        where: { title: post.title },
+      });
+
+      if (postRegistered) {
+        throw new Error("Post already registered");
+      }
+
+      await this.db.post.create({
+        data: post,
+      });
+
+      return post;
+    } catch (err) {
+      console.error(err);
+      throw new Error("Internal server error");
+    }
   }
 }
