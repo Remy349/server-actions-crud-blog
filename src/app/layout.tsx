@@ -2,6 +2,7 @@ import "@/app/globals.css";
 import type { Metadata } from "next";
 import { Raleway } from "next/font/google";
 import { Toaster } from "sonner";
+import { Navbar } from "./_components/navbar";
 
 const raleway = Raleway({ subsets: ["latin"] });
 
@@ -17,8 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={raleway.className}>
-        <main className="bg-muted/40 min-h-screen">
-          <section className="pt-[4rem] pb-[2.5rem]">
+        <Navbar />
+        <main className="bg-muted/40 min-h-screen mt-16">
+          <section className="pt-[2.5rem] pb-[2.5rem]">
             <div className="px-6 mx-auto max-w-5xl">{children}</div>
           </section>
         </main>
