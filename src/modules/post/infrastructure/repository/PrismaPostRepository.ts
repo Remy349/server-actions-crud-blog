@@ -25,8 +25,7 @@ export class PostRepositoryImpl implements IPostRepository {
           ),
       );
     } catch (err) {
-      console.error(err);
-      throw new Error("Internal server error");
+      throw new Error("Failed to fetch posts");
     }
   }
 
@@ -48,8 +47,7 @@ export class PostRepositoryImpl implements IPostRepository {
         post.createdAt,
       );
     } catch (err) {
-      console.error(err);
-      throw new Error("Internal server error");
+      throw new Error("Failed to fetch post");
     }
   }
 
@@ -75,7 +73,10 @@ export class PostRepositoryImpl implements IPostRepository {
 
       return post;
     } catch (err) {
-      console.error(err);
+      if (err instanceof Error) {
+        throw err;
+      }
+
       throw new Error("Internal server error");
     }
   }
