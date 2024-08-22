@@ -15,9 +15,7 @@ const deletePostUseCase = new DeletePostUseCase(postRepository);
 export const createPostAction = async (
   formData: TCreateFormSchema,
 ): Promise<void> => {
-  const { title } = formData;
-
-  const post = await createPostUseCase.execute(title);
+  const post = await createPostUseCase.execute(formData);
 
   revalidatePath("/");
   redirect(`/posts/${post.id}/edit`);
