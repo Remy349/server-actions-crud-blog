@@ -9,7 +9,9 @@ export default async function Page({ params }: IParams) {
 
   const post = await getPostById(postId);
 
-  console.log(post);
+  if (!post) {
+    return <h1>Not found</h1>;
+  }
 
-  return <h1>{post?.title}</h1>;
+  return <h1>{post.title}</h1>;
 }
