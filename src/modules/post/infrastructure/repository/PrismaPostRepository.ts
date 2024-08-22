@@ -80,4 +80,24 @@ export class PostRepositoryImpl implements IPostRepository {
       throw new Error("Internal server error");
     }
   }
+
+  async delete(postId: string): Promise<void> {
+    try {
+      const postRegistered = await this.getById(postId);
+
+      if (!postRegistered) {
+        throw new Error("User not found");
+      }
+
+      await this.db.post.delete({
+        where: { id: postRegistered.id },
+      });
+    } catch (err) {
+      if (err instanceof Error) {
+        throw err;
+      }
+
+      throw new Error("Internal server error");
+    }
+  }
 }
