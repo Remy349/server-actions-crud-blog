@@ -13,6 +13,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { Trash } from "lucide-react";
 import { toast } from "sonner";
 
@@ -45,7 +46,10 @@ export const DeleteDialog = ({ postId }: IDeleteDialogProps) => {
         <AlertDialogFooter>
           <AlertDialogCancel className="font-medium">Cancel</AlertDialogCancel>
           <AlertDialogAction
-            className={buttonVariants({ variant: "destructive" })}
+            className={cn(
+              "font-medium",
+              buttonVariants({ variant: "destructive" }),
+            )}
             onClick={handleDeletePost}
           >
             Continue
