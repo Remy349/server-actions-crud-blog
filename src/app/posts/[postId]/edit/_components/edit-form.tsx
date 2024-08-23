@@ -15,6 +15,7 @@ import { EditFormSchema, TEditFormSchema } from "@/schemas/PostSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircle } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { TiptapEditor } from "./tiptap-editor";
 
 interface IEditFormProps {
   post: PostDTO;
@@ -47,6 +48,19 @@ export const EditForm = ({ post }: IEditFormProps) => {
               <FormLabel>Title</FormLabel>
               <FormControl>
                 <Input {...field} type="text" autoComplete="off" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={control}
+          name="content"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Content</FormLabel>
+              <FormControl>
+                <TiptapEditor content={field.value} onChange={field.onChange} />
               </FormControl>
               <FormMessage />
             </FormItem>
