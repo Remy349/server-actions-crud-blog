@@ -9,6 +9,12 @@ export class GetPostByIdUseCase {
   }
 
   async execute(postId: string): Promise<Post | null> {
-    return await this.postRepository.getById(postId);
+    const post = await this.postRepository.getById(postId);
+
+    if (!post) {
+      return null;
+    }
+
+    return post;
   }
 }

@@ -81,12 +81,33 @@ export class PostRepositoryImpl implements IPostRepository {
     }
   }
 
+  async updateIsPublished(postId: string, isPublished: boolean): Promise<void> {
+    try {
+      const postRegistered = await this.getById(postId);
+
+      if (!postRegistered) {
+        throw new Error("Post not found");
+      }
+
+      await this.db.post.update({
+        where: { id: postRegistered.id },
+        data: { isPublished },
+      });
+    } catch (err) {
+      if (err instanceof Error) {
+        throw err;
+      }
+
+      throw new Error("Internal server error");
+    }
+  }
+
   async delete(postId: string): Promise<void> {
     try {
       const postRegistered = await this.getById(postId);
 
       if (!postRegistered) {
-        throw new Error("User not found");
+        throw new Error("Post not found");
       }
 
       await this.db.post.delete({
