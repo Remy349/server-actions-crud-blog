@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { getPostById } from "@/services/PostService";
-import { ChevronLeft, Eye, EyeOff } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { EditForm } from "./_components/edit-form";
 import {
@@ -12,6 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { DeleteDialog } from "./_components/delete-dialog";
+import { ToggleIsPublished } from "./_components/toggle-ispublished";
 
 interface IParams {
   params: { postId: string };
@@ -43,13 +44,7 @@ export default async function Page({ params }: IParams) {
               <ChevronLeft className="w-5 h-5" />
             </Link>
           </Button>
-          <Button size="icon" variant="outline">
-            {post.isPublished ? (
-              <Eye className="w-4 h-4" />
-            ) : (
-              <EyeOff className="w-4 h-4" />
-            )}
-          </Button>
+          <ToggleIsPublished postId={post.id} isPublished={post.isPublished} />
           <DeleteDialog postId={post.id} />
         </div>
         <Badge variant="secondary">
