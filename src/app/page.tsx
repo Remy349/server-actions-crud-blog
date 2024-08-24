@@ -49,7 +49,12 @@ export default async function Page() {
                       similique laudantium expedita possimus!
                     </p>
                   ) : (
-                    <p className="text-sm line-clamp-4">{post.content}</p>
+                    <div
+                      className="line-clamp-4 text-sm prose-sm prose-ol:list-decimal prose-ul:list-disc"
+                      dangerouslySetInnerHTML={{
+                        __html: post.content || "",
+                      }}
+                    />
                   )}
                 </CardContent>
                 <CardFooter className="gap-x-3">
