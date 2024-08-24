@@ -10,12 +10,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { PostDTO } from "@/modules/post/application/dto/PostDTO";
+import { PostDTO } from "@/modules/post/domain/dtos/PostDTO";
 import { EditFormSchema, TEditFormSchema } from "@/schemas/PostSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircle } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { TiptapEditor } from "./tiptap-editor";
+import { updatePost } from "@/actions/PostAction";
+import { toast } from "sonner";
 
 interface IEditFormProps {
   post: PostDTO;
@@ -34,7 +36,9 @@ export const EditForm = ({ post }: IEditFormProps) => {
   } = form;
 
   const onSubmit = async (formData: TEditFormSchema) => {
-    console.log(formData);
+    await updatePost(post.id, formData);
+
+    toast.success("Post successfully updated");
   };
 
   return (

@@ -3,18 +3,20 @@
 import { CreatePostUseCase } from "@/modules/post/application/CreatePostUseCase";
 import { DeletePostUseCase } from "@/modules/post/application/DeletePostUseCase";
 import { UpdatePostIsPublishedUseCase } from "@/modules/post/application/UpdatePostIsPublishedUseCase";
+import { UpdatePostUseCase } from "@/modules/post/application/UpdatePostUseCase";
 import { PostRepositoryImpl } from "@/modules/post/infrastructure/repository/PrismaPostRepository";
-import { TCreateFormSchema } from "@/schemas/PostSchema";
+import { TCreateFormSchema, TEditFormSchema } from "@/schemas/PostSchema";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 const postRepository = new PostRepositoryImpl();
 
 const createPostUseCase = new CreatePostUseCase(postRepository);
-const deletePostUseCase = new DeletePostUseCase(postRepository);
+const updatePostUseCase = new UpdatePostUseCase(postRepository);
 const updatePostIsPublishedUseCase = new UpdatePostIsPublishedUseCase(
   postRepository,
 );
+const deletePostUseCase = new DeletePostUseCase(postRepository);
 
 export const createPostAction = async (
   formData: TCreateFormSchema,
@@ -23,6 +25,16 @@ export const createPostAction = async (
 
   revalidatePath("/");
   redirect(`/posts/${post.id}/edit`);
+};
+
+export const updatePost = async (
+  postId: string,
+  formData: TEditFormSchema,
+): Promise<void> => {
+  await updatePostUseCase.execute(postId, formData);
+
+  revalidatePath("/");
+  redirect("/");
 };
 
 export const updatePostIsPublishedAction = async (

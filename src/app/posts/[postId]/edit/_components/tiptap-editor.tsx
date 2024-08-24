@@ -17,7 +17,7 @@ export const TiptapEditor = ({ content, onChange }: ITiptapEditorProps) => {
     editorProps: {
       attributes: {
         class:
-          "h-[360px] border border-input rounded-md px-3 py-1 text-sm shadow-sm bg-transparent focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+          "min-h-[360px] w-full border border-input rounded-md px-3 py-1 text-sm shadow-sm bg-transparent focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
       },
     },
     onUpdate({ editor }) {
@@ -26,7 +26,7 @@ export const TiptapEditor = ({ content, onChange }: ITiptapEditorProps) => {
   });
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 prose-sm prose-ol:list-decimal prose-ul:list-disc">
       <ToolbarEditor editor={editor} />
       <EditorContent editor={editor} />
     </div>

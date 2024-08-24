@@ -27,14 +27,6 @@ export default async function Page({ params }: IParams) {
     return <h1>Not found</h1>;
   }
 
-  const plainPost = {
-    id: post.id,
-    title: post.title,
-    content: post.content,
-    isPublished: post.isPublished,
-    createdAt: post.createdAt,
-  };
-
   return (
     <div className="md:max-w-3xl md:mx-auto">
       <div className="flex items-center justify-between mb-6">
@@ -60,7 +52,7 @@ export default async function Page({ params }: IParams) {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <EditForm post={plainPost} />
+          <EditForm post={post} />
         </CardContent>
       </Card>
     </div>
