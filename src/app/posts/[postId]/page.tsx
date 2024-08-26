@@ -3,6 +3,7 @@ import { formatDate } from "@/lib/utils";
 import { getPostById } from "@/services/PostService";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 interface IParams {
   params: { postId: string };
@@ -14,7 +15,7 @@ export default async function Page({ params }: IParams) {
   const post = await getPostById(postId);
 
   if (!post) {
-    return <h1>Not found</h1>;
+    notFound();
   }
 
   return (

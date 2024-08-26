@@ -36,9 +36,15 @@ export const EditForm = ({ post }: IEditFormProps) => {
   } = form;
 
   const onSubmit = async (formData: TEditFormSchema) => {
-    await updatePost(post.id, formData);
+    try {
+      await updatePost(post.id, formData);
 
-    toast.success("Post successfully updated");
+      toast.success("Post successfully updated");
+    } catch (err) {
+      if (err instanceof Error) {
+        toast.error(err.message);
+      }
+    }
   };
 
   return (

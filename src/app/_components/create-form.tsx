@@ -30,9 +30,15 @@ export const CreateForm = () => {
   } = form;
 
   const onSubmit = async (formData: TCreateFormSchema) => {
-    await createPostAction(formData);
+    try {
+      await createPostAction(formData);
 
-    toast.success("Post successfully created");
+      toast.success("Post successfully created");
+    } catch (err) {
+      if (err instanceof Error) {
+        toast.error(err.message);
+      }
+    }
   };
 
   return (

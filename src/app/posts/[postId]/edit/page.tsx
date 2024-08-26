@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/card";
 import { DeleteDialog } from "./_components/delete-dialog";
 import { ToggleIsPublished } from "./_components/toggle-ispublished";
+import { notFound } from "next/navigation";
 
 interface IParams {
   params: { postId: string };
@@ -24,7 +25,7 @@ export default async function Page({ params }: IParams) {
   const post = await getPostById(postId);
 
   if (!post) {
-    return <h1>Not found</h1>;
+    notFound();
   }
 
   return (
